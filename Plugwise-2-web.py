@@ -26,6 +26,7 @@ import logging.handlers
 import string
 #  DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
 import cgi
+from email.message import EmailMessage
 import urllib.parse
 import mimetypes
 import os
@@ -191,7 +192,7 @@ class PW2PYwebHandler(HTTPWebSocketsHandler):
         self.log_message("PW2PYwebHandler do_POST")
         #self.logRequest()
         path = self.path
-        ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
+        ctype, pdict = self.headers.get_content_type(), self.headers['content-type'].params # cgi.parse_header(self.headers.getheader('content-type'))
         
         if (ctype == 'application/x-www-form-urlencoded'): 
             clienttype = "ajax    "
