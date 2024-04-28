@@ -31,7 +31,7 @@ from swutil.util import *
 from swutil.pwmqtt import *
 from plugwise.api import *
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 #import datetime
 import time
 import calendar
@@ -92,7 +92,7 @@ open_logcomm(logpath+"pw-communication.log")
 #prepare for cleanup of /tmp after n days.
 cleanage = 604800; # seven days in seconds
 # datetime.datetime.now(datetime.UTC). DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC)
-locnow = datetime.now(datetime.UTC)-timedelta(seconds=time.timezone)
+locnow = datetime.now(tz=timezone.utc)-timedelta(seconds=time.timezone)
 now = locnow
 yrfolder = str(now.year)+'/'
 if not os.path.exists(perpath+yrfolder+actdir):
