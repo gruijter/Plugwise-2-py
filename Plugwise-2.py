@@ -31,7 +31,7 @@ from swutil.util import *
 from swutil.pwmqtt import *
 from plugwise.api import *
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 #import datetime
 import time
 import calendar
@@ -91,8 +91,8 @@ open_logcomm(logpath+"pw-communication.log")
 
 #prepare for cleanup of /tmp after n days.
 cleanage = 604800; # seven days in seconds
-
-locnow = datetime.utcnow()-timedelta(seconds=time.timezone)
+# datetime.datetime.now(datetime.UTC). DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC)
+locnow = datetime.now(tz=timezone.utc)-timedelta(seconds=time.timezone)
 now = locnow
 yrfolder = str(now.year)+'/'
 if not os.path.exists(perpath+yrfolder+actdir):
@@ -1461,7 +1461,7 @@ try:
             mqttclient = Mqtt_client(cfg['mqtt_ip'], cfg['mqtt_port'], qpub, qsub, "Plugwise-2-py")
         mqttclient.subscribe("plugwise2py/cmd/#")
         mqtt_t = threading.Thread(target=mqttclient.run)
-        mqtt_t.setDaemon(True)
+        mqtt_t.daemon = True
         mqtt_t.start()
         info("MQTT thread started")
     else:
