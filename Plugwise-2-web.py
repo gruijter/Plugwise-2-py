@@ -24,6 +24,7 @@ import time
 import logging
 import logging.handlers
 import string
+#  DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
 import cgi
 import urllib.parse
 import mimetypes
@@ -95,7 +96,10 @@ elif 'mqtt_ip' in cfg and 'mqtt_port' in cfg:
         mqttclient = Mqtt_client(cfg['mqtt_ip'], cfg['mqtt_port'], qpub, qsub, "Plugwise-2-web")
     mqttclient.subscribe("plugwise2py/state/#")
     mqtt_t = threading.Thread(target=mqttclient.run)
-    mqtt_t.setDaemon(True)
+    #- self.t.setDaemon(True)
+    #+ self.t.daemon = True
+    # DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
+    mqtt_t.daemon = True
     mqtt_t.start()
     info("MQTT thread started")
 else:
@@ -131,7 +135,7 @@ def broadcaster():
         time.sleep(0.1)
         
 bc_t = threading.Thread(target=broadcaster)
-bc_t.setDaemon(True)
+bc_t.daemon = True
 bc_t.start()
 info("Broadcast thread started")
     
