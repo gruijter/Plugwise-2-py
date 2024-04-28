@@ -25,7 +25,7 @@ import logging
 import logging.handlers
 import string
 #  DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
-import cgi
+#import cgi
 from email.message import EmailMessage
 import urllib.parse
 import mimetypes
