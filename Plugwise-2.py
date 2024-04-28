@@ -1461,7 +1461,7 @@ try:
             mqttclient = Mqtt_client(cfg['mqtt_ip'], cfg['mqtt_port'], qpub, qsub, "Plugwise-2-py")
         mqttclient.subscribe("plugwise2py/cmd/#")
         mqtt_t = threading.Thread(target=mqttclient.run)
-        mqtt_t.setDaemon(True)
+        mqtt_t.daemon = True
         mqtt_t.start()
         info("MQTT thread started")
     else:
