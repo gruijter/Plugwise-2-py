@@ -91,8 +91,8 @@ open_logcomm(logpath+"pw-communication.log")
 
 #prepare for cleanup of /tmp after n days.
 cleanage = 604800; # seven days in seconds
-
-locnow = datetime.utcnow()-timedelta(seconds=time.timezone)
+# datetime.datetime.now(datetime.UTC). DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC)
+locnow = datetime.datetime.now(datetime.UTC)-timedelta(seconds=time.timezone)
 now = locnow
 yrfolder = str(now.year)+'/'
 if not os.path.exists(perpath+yrfolder+actdir):
